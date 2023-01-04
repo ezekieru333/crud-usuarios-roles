@@ -20,7 +20,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-        return Inertia::render('users.index', ['users' => $users]);
+        return Inertia::render('users/Index', ['users' => $users]);
     }
 
     /**
@@ -84,7 +84,7 @@ class UserController extends Controller
         $roles = Role::pluck('name','name')->all();
         $userRole = $user->roles->pluck('name','name')->all();
     
-        return Inertia::render('users.editar', ['user' => $user,'roles' => $role,'userRole' => $userRole]);
+        return Inertia::render('users.editar', ['user' => $user,'roles' => $roles,'userRole' => $userRole]);
     }
 
     /**
