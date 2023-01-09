@@ -11,13 +11,13 @@ use Inertia\Inertia;
 
 class RoleController extends Controller
 {
-    // function __construct()
-    // {
-    //      $this->middleware('permission:read-rol|create-rol|update-rol|destroy-rol', ['only' => ['index']]);
-    //      $this->middleware('permission:create-rol', ['only' => ['create','store']]);
-    //      $this->middleware('permission:update-rol', ['only' => ['edit','update']]);
-    //      $this->middleware('permission:destroy-rol', ['only' => ['destroy']]);
-    // }
+    function __construct()
+    {
+         $this->middleware('permission:read-rol|create-rol|update-rol|destroy-rol', ['only' => ['index']]);
+         $this->middleware('permission:create-rol', ['only' => ['create','store']]);
+         $this->middleware('permission:update-rol', ['only' => ['edit','update']]);
+         $this->middleware('permission:destroy-rol', ['only' => ['destroy']]);
+    }
 
     /**
      * Display a listing of the resource.
