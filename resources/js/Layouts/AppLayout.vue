@@ -49,13 +49,13 @@ const logout = () => {
 
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                                    Dashboard
+                                <NavLink :href="route('users.index')" :active="route().current('users.index')">
+                                    Users
                                 </NavLink>
                             </div>
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <NavLink :href="route('users.index')" :active="route().current('users.index')">
-                                    Users
+                                <NavLink :href="route('roles.index')" :active="route().current('roles.index')">
+                                    Roles
                                 </NavLink>
                             </div>
                         </div>
@@ -286,7 +286,7 @@ const logout = () => {
 
             <!-- Page Content -->
             <main>
-                <slot />
+                <slot name="body" />
             </main>
         </div>
     </div>

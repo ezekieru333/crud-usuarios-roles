@@ -31,7 +31,7 @@ class UserController extends Controller
     public function create()
     {
         $roles = Role::pluck('name','name')->all();
-        return Inertia::render('users.crear', ['roles' => $roles]);
+        return Inertia::render('users/Create', ['roles' => $roles]);
     }
 
     /**
@@ -41,14 +41,13 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        $this->validate($request, [
+    {   
+        $request->validate([
             'name' => 'required',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|same:confirm-password',
+            'email' => 'required|email',
+            'password' => 'required',
             'roles' => 'required'
         ]);
-    
         $password = Hash::make($request->password);
         $user = User::create([
             'name' => $request->name,
@@ -84,7 +83,7 @@ class UserController extends Controller
         $roles = Role::pluck('name','name')->all();
         $userRole = $user->roles->pluck('name','name')->all();
     
-        return Inertia::render('users.editar', ['user' => $user,'roles' => $roles,'userRole' => $userRole]);
+        return Inertia::render('users/Edit', ['user' => $user,'roles' => $roles,'userRole' => $userRole]);
     }
 
     /**
@@ -99,7 +98,6 @@ class UserController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'email' => 'required|email|unique:users,email,'.$id,
-            'password' => 'same:confirm-password',
             'roles' => 'required'
         ]);
     

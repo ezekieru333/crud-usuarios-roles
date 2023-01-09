@@ -11,13 +11,13 @@ use Inertia\Inertia;
 
 class RoleController extends Controller
 {
-    function __construct()
-    {
-         $this->middleware('permission:read-rol|create-rol|update-rol|destroy-rol', ['only' => ['index']]);
-         $this->middleware('permission:create-rol', ['only' => ['create','store']]);
-         $this->middleware('permission:update-rol', ['only' => ['edit','update']]);
-         $this->middleware('permission:destroy-rol', ['only' => ['destroy']]);
-    }
+    // function __construct()
+    // {
+    //      $this->middleware('permission:read-rol|create-rol|update-rol|destroy-rol', ['only' => ['index']]);
+    //      $this->middleware('permission:create-rol', ['only' => ['create','store']]);
+    //      $this->middleware('permission:update-rol', ['only' => ['edit','update']]);
+    //      $this->middleware('permission:destroy-rol', ['only' => ['destroy']]);
+    // }
 
     /**
      * Display a listing of the resource.
@@ -26,8 +26,8 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = Role::paginate(5);
-        return Inertia::render('roles.index', ['roles' => $roles]);
+        $roles = Role::all();
+        return Inertia::render('roles/Index', ['roles' => $roles]);
     }
 
     /**
@@ -37,8 +37,8 @@ class RoleController extends Controller
      */
     public function create()
     {
-        $permission = Permission::get();
-        return Inertia::render('roles.create', ['permission' => $permission]);
+        $permissions = Permission::all();
+        return Inertia::render('roles/Create', ['permissions' => $permissions]);
     }
 
     /**
@@ -51,11 +51,11 @@ class RoleController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|unique:roles,name',
-            'permission' => 'required',
+            'permissions' => 'required',
         ]);
     
-        $role = Role::create(['name' => $request->name]);
-        $role->syncPermissions($request->permission);
+        $role = Role::create(['guard_name' => 'web', 'name' => $request->name]);
+        $role->syncPermissions($request->permissions);
     
         return redirect()->route('roles.index');   
     }
@@ -80,12 +80,10 @@ class RoleController extends Controller
     public function edit($id)
     {
         $role = Role::find($id);
-        $permission = Permission::get();
-        $rolePermissions = DB::table("role_has_permissions")->where("role_has_permissions.role_id",$id)
-            ->pluck('role_has_permissions.permission_id','role_has_permissions.permission_id')
-            ->all();
+        $permissions = Permission::get();
+        $rolePermissions = $role->permissions->pluck('name');
     
-        return Inertia::render('roles.edit',compact('role','permission','rolePermissions'));
+        return Inertia::render('roles/Edit', ['role' => $role,'permissions' => $permissions,'rolePermissions' => $rolePermissions]);
     }
 
     /**
@@ -95,18 +93,18 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Role $role)
     {
-        $this->validate($request, [
+        
+        $request->validate( [
             'name' => 'required',
-            'permission' => 'required',
+            'permissions' => 'required',
         ]);
-    
-        $role = Role::find($id);
+        
         $role->name = $request->name;
         $role->save();
     
-        $role->syncPermissions($request->permission);
+        $role->syncPermissions($request->permissions);
     
         return redirect()->route('roles.index');         
     }
