@@ -26,7 +26,6 @@ const perms = ref([]);
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">Roles</h2>
     </template>
-    <template #body>
       <div class="p-6 bg-white border-b border-gray-200">
         <form @submit.prevent="submit">
           <div class="mb-6 max-w-md">
@@ -51,6 +50,5 @@ const perms = ref([]);
           </button>
         </form>
       </div>
-    </template>
   </AppLayout>
 </template>

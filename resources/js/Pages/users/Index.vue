@@ -21,7 +21,6 @@ function destroy(id) {
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">Users</h2>
     </template>
-    <template #body>
       <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
         <div class="p-4 bg-white border-b border-gray-200">
           <div class="col-12">
@@ -77,6 +76,5 @@ function destroy(id) {
           </div>
         </div>
       </div>
-    </template>
   </AppLayout>
 </template>

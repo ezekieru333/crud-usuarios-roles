@@ -286,7 +286,7 @@ const logout = () => {
 
             <!-- Page Content -->
             <main>
-                <slot name="body" />
+                <slot />
             </main>
         </div>
     </div>

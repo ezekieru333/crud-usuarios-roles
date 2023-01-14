@@ -46,7 +46,7 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|email',
             'password' => 'required',
-            'roles' => 'required'
+            'role' => 'required'
         ]);
         $password = Hash::make($request->password);
         $user = User::create([
@@ -55,7 +55,7 @@ class UserController extends Controller
             'password' => $password
         ]);
         
-        $user->assignRole($request->roles);
+        $user->assignRole($request->role);
     
         return redirect()->route('users.index');
     }
@@ -96,12 +96,11 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => 'required',
+            'name' => 'required|alpha',
             'email' => 'required|email|unique:users,email,'.$id,
-            'roles' => 'required'
+            'role' => 'required'
         ]);
     
-        $input = $request->all();
         if(!empty($request->password)){ 
             $password = Hash::make($request->password);
         }
@@ -114,7 +113,7 @@ class UserController extends Controller
         ]);
         DB::table('model_has_roles')->where('model_id',$id)->delete();
     
-        $user->assignRole($request->roles);
+        $user->assignRole($request->role);
     
         return redirect()->route('users.index');
     }

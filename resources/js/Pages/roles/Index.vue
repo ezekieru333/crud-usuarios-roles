@@ -21,7 +21,6 @@ function destroy(id) {
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">Roles</h2>
     </template>
-    <template #body>
       <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
         <div class="p-4 bg-white border-b border-gray-200">
           <div class="col-12">
@@ -33,9 +32,10 @@ function destroy(id) {
                   py-2
                   px-4
                   rounded
+                  mb-10
                 ">Create Role
             </Link>
-            <table class="table-auto">
+            <table class="table-full">
               <thead class="mt-8 text-lg">
                 <tr>
                   <th class="border px-4 py-2">ID</th>
@@ -75,6 +75,5 @@ function destroy(id) {
           </div>
         </div>
       </div>
-    </template>
   </AppLayout>
 </template>
