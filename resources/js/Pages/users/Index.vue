@@ -16,6 +16,30 @@ function destroy(id) {
   }
 }
 </script>
+<style scoped>
+html,
+body {
+  height: 100%;
+}
+
+@media (min-width: 640px) {
+  table {
+    display: inline-table !important;
+  }
+
+  thead tr:not(:first-child) {
+    display: none;
+  }
+}
+
+td:not(:last-child) {
+  border-bottom: 0;
+}
+
+th:not(:last-child) {
+  border-bottom: 2px solid rgba(0, 0, 0, .1);
+}
+</style>
 <template>
   <AppLayout title="Users">
     <template #header>
@@ -32,24 +56,27 @@ function destroy(id) {
                   py-2
                   px-4
                   rounded
+                  block
+                  max-w-fit
                 ">Create User
             </Link>
-            <table class="table-auto">
-              <thead class="mt-8 text-lg">
-                <tr>
-                  <th class="border px-4 py-2">ID</th>
-                  <th class="border px-4 py-2">Name</th>
-                  <th class="border px-4 py-2">Email</th>
-                  <th class="border px-4 py-2">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="user in users" :key="user.id">
-                  <td class="border px-4 py-2">{{ user.id }}</td>
-                  <td class="border px-4 py-2">{{ user.name }}</td>
-                  <td class="border px-4 py-2">{{ user.email }}</td>
-                  <td class="border px-4 py-2">
-                    <Link :href="route('users.edit', user.id)" class="
+            <table class="w-full flex flex-row flex-no-wrap sm:bg-white rounded-lg overflow-hidden sm:shadow-lg my-5">
+            <thead class="text-white">
+              <tr v-for="user in users" :key="user.id"
+                class="bg-teal-400 flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0">
+                <th class="border p-3 h-14">ID</th>
+                <th class="border p-3 h-14">Name</th>
+                <th class="border p-3 h-14">Email</th>
+                <th class="border p-3 h-14">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="flex-1 sm:flex-none">
+              <tr class="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0" v-for="user in users" :key="user.id">
+                <td class="border-grey-light border hover:bg-gray-100 p-3 h-14 text-center">{{ user.id }}</td>
+                <td class="border-grey-light border hover:bg-gray-100 p-3 h-14 text-center">{{ user.name }}</td>
+                <td class="border-grey-light border hover:bg-gray-100 p-3 h-14 text-center">{{ user.email }}</td>
+                <td class="border-grey-light border hover:bg-gray-100 p-3 h-14 text-center">
+                  <Link :href="route('users.edit', user.id)" class="
                           bg-blue-500
                           hover:bg-blue-700
                           text-white
@@ -58,7 +85,7 @@ function destroy(id) {
                           px-4
                           rounded-full
                         ">Edit</Link>
-                    <button @click="destroy(user.id)" class="
+                  <button @click="destroy(user.id)" class="
                           bg-red-500
                           hover:bg-red-700
                           text-white text-sm
@@ -67,12 +94,12 @@ function destroy(id) {
                           px-4
                           rounded-full
                         ">
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
           </div>
         </div>
       </div>

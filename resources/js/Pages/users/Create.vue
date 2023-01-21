@@ -56,7 +56,7 @@ const submit = () => {
         </div>
         <div class="mb-6 max-w-md">
           <select v-model="form.role">
-            <option v-for="role in roles" :value="role">
+            <option v-for="role in roles" :key="role.id" :value="role">
               {{ role }}
             </option>
           </select>

@@ -58,9 +58,10 @@ const submit = () => {
               {{ form.errors.password }}
             </div>
           </div>
-          <div class="mb-6">
+          <div class="mb-6"><label for="role"
+              class="block mb-2 text-sm font-medium text-gray-900">Role</label>
             <select v-model="form.role">
-              <option v-for="role in roles" :value="role">
+              <option v-for="role in roles" :key="role.id" :value="role">
                 {{ role }}
               </option>
             </select>

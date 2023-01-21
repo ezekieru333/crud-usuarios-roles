@@ -41,7 +41,7 @@ const perms = ref([]);
             </div>
           </div>
           <div class="mb-6 max-w-md">
-            <div v-for="permission in permissions">
+            <div v-for="permission in permissions" :key="permission.id">
               <input type="checkbox" :id="permission.name" :value="permission.name" v-model="form.permissions">
               <label :for="permission.name" class="block mb-2 text-sm font-medium text-gray-900">{{ permission.name }}</label>
             </div>

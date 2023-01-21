@@ -48,12 +48,12 @@ const logout = () => {
                             </div>
 
                             <!-- Navigation Links -->
-                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                            <div class="space-x-8 -my-px ml-10 flex">
                                 <NavLink :href="route('users.index')" :active="route().current('users.index')">
                                     Users
                                 </NavLink>
                             </div>
-                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                            <div class="space-x-8 -my-px ml-10 flex">
                                 <NavLink :href="route('roles.index')" :active="route().current('roles.index')">
                                     Roles
                                 </NavLink>

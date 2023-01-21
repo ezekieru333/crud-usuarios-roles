@@ -30,7 +30,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roles = Role::pluck('name','name')->all();
+        $roles = Role::pluck('name', 'name')->all();
         return Inertia::render('users/Create', ['roles' => $roles]);
     }
 
@@ -41,7 +41,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   
+    {
         $request->validate([
             'name' => 'required',
             'email' => 'required|email',
@@ -54,9 +54,9 @@ class UserController extends Controller
             'email' => $request->email,
             'password' => $password
         ]);
-        
+
         $user->assignRole($request->role);
-    
+
         return redirect()->route('users.index');
     }
 
@@ -80,10 +80,10 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        $roles = Role::pluck('name','name')->all();
-        $userRole = $user->roles->pluck('name','name')->all();
-    
-        return Inertia::render('users/Edit', ['user' => $user,'roles' => $roles,'userRole' => $userRole]);
+        $roles = Role::pluck('name', 'name')->all();
+        $userRole = $user->roles->pluck('name', 'name')->all();
+
+        return Inertia::render('users/Edit', ['user' => $user, 'roles' => $roles, 'userRole' => $userRole]);
     }
 
     /**
@@ -97,24 +97,28 @@ class UserController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|alpha',
-            'email' => 'required|email|unique:users,email,'.$id,
+            'email' => 'required|email|unique:users,email,' . $id,
             'role' => 'required'
         ]);
-    
-        if(!empty($request->password)){ 
-            $password = Hash::make($request->password);
-        }
-    
         $user = User::find($id);
-        $user->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => $password
-        ]);
-        DB::table('model_has_roles')->where('model_id',$id)->delete();
-    
+        if (!empty($request->password)) {
+            $password = Hash::make($request->password);
+            $user->update([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => $password
+            ]);
+        } else {
+            $user->update([
+                'name' => $request->name,
+                'email' => $request->email
+            ]);
+        }
+
+        DB::table('model_has_roles')->where('model_id', $id)->delete();
+
         $user->assignRole($request->role);
-    
+
         return redirect()->route('users.index');
     }
 
